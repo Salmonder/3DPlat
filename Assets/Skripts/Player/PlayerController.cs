@@ -30,10 +30,9 @@ public class PlayerController : MonoBehaviour {
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
         rb.AddForce(gravity, ForceMode.Acceleration);
 
-        moveX = Input.GetAxis("Horizontal");
-        moveY = Input.GetAxis("Vertical");
 
-        
+        rb.velocity = new Vector3(moveX * maxSpeed, rb.velocity.y, moveY * maxSpeed);
+
     }
 
     void Update()
@@ -46,6 +45,9 @@ public class PlayerController : MonoBehaviour {
             maassa = true;
         }
 
+        moveX = Input.GetAxis("Horizontal");
+        moveY = Input.GetAxis("Vertical");
+
 
 
         if (maassa && Input.GetButtonDown("Jump"))
@@ -54,9 +56,5 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void LateUpdate()
-    {
-        rb.velocity = new Vector3(moveX * maxSpeed, rb.velocity.y, moveY * maxSpeed);
-    }
 }
 //https://unity3d.com/learn/tutorials/topics/2d-game-creation/2d-character-controllers animaattoriin
