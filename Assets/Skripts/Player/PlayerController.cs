@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     float moveX;
-    float moveY;
+    float moveZ;
+    Vector3 movement;
     Rigidbody rb;
     public float maxSpeed = 30f;     //liikkumiseen
 
@@ -13,27 +14,38 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     float maanEtäisyys = 1.0f;
     public LayerMask onkoMaata;
-    public float jumpHight;         //hyppimiseen
+    public float jumpHight;         
     public float gravityScale = 1.0f;
     public static float globalGravity = -9.81f;
+    float jumpDelay = 0;                            //hyppimiseen
+
+    Vector3 ylös = Vector3.up;
+    public float turnSmooth;
+    Quaternion suunta;
+    float viive;                            //kääntyminen
+
+    Animator anim;
+    
+    
 
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
+
+
 
 
     void FixedUpdate()
     {
-        Vector3 gravity = globalGravity * gravityScale * Vector3.up;
-        rb.AddForce(gravity, ForceMode.Acceleration);
 
-
-        rb.velocity = new Vector3(moveX * maxSpeed, rb.velocity.y, moveY * maxSpeed);
-
+        rb.velocity = new Vector3(movement.x * maxSpeed, rb.velocity.y, movement.z * maxSpeed);
     }
+
+
 
     void Update()
     {
@@ -46,15 +58,38 @@ public class PlayerController : MonoBehaviour {
         }
 
         moveX = Input.GetAxis("Horizontal");
-        moveY = Input.GetAxis("Vertical");
+        moveZ = Input.GetAxis("Vertical");
+        movement = new Vector3(moveX, 0, moveZ);
+        if (movement.magnitude >= 1)
+        {
+            movement = movement.normalized;
+        }
 
 
 
-        if (maassa && Input.GetButtonDown("Jump"))
+        if (jumpDelay <= 0.1)
+        {
+            jumpDelay = jumpDelay + Time.deltaTime;
+        }
+
+        if (maassa && Input.GetButtonDown("Jump") && jumpDelay >= 0.1)
         {
             rb.AddForce(new Vector2(0, jumpHight));
+            jumpDelay = 0;
         }
-    }
 
+
+
+        if (movement != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement, ylös), turnSmooth);
+        }
+
+
+
+        float liike = movement.magnitude;
+        anim.SetFloat("Speed", liike);
+
+    }
 }
-//https://unity3d.com/learn/tutorials/topics/2d-game-creation/2d-character-controllers animaattoriin
+
