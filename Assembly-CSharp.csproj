@@ -59,8 +59,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Skripts\EnemyPath.cs" />
+    <Compile Include="Assets\Skripts\Enemy\EnemyPath.cs" />
     <Compile Include="Assets\Skripts\Player\CameraController.cs" />
+    <Compile Include="Assets\Skripts\Player\Damage.cs" />
     <Compile Include="Assets\Skripts\Player\PlayerController.cs" />
     <None Include="Assets\Shaders\_MK\MKToonFree\Shader\Inc\Outline\MKToonOutlineOnlyIO.cginc" />
     <None Include="Assets\Shaders\_MK\MKToonFree\Shader\MKToonFreeOutlineOnly.shader" />

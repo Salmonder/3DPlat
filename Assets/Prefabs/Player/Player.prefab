@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 95132893615753532}
   - component: {fileID: 54712686625054968}
   - component: {fileID: 65915970767374994}
+  - component: {fileID: 114438660740176776}
   - component: {fileID: 114302204961821442}
   m_Layer: 0
   m_Name: Player
@@ -473,7 +474,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246730384824448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4876333292830238}
@@ -659,6 +660,17 @@ MonoBehaviour:
   jumpHight: 1000
   gravityScale: 5
   turnSmooth: 0.8
+--- !u!114 &114438660740176776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1202786490001650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808638b5e6af9b94aab45515fd90878d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137725751454730194
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

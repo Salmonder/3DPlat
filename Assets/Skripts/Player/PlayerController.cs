@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 
     bool maassa = false;
     public Transform groundCheck;
-    float maanEtäisyys = 1.0f;
+    public float maanEtäisyys = 1.0f;
     public LayerMask onkoMaata;
     public float jumpHight;         
     public float gravityScale = 1.0f;
