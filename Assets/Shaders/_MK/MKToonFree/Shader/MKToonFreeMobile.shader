@@ -1,4 +1,4 @@
-﻿Shader "Hidden/MK/Toon/FreeMobile"
+﻿Shader "MK/Toon/FreeMobile"
 {
 	Properties
 	{

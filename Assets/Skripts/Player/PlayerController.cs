@@ -11,12 +11,7 @@ public class PlayerController : MonoBehaviour {
     public float maxSpeed = 30f;     //liikkumiseen
 
     bool maassa = false;
-    public Transform groundCheck;
-    public float maanEtäisyys = 1.0f;
-    public LayerMask onkoMaata;
     public float jumpHight;         
-    public float gravityScale = 1.0f;
-    public static float globalGravity = -9.81f;
     float jumpDelay = 0;                            //hyppimiseen
 
     Vector3 ylös = Vector3.up;
@@ -25,6 +20,10 @@ public class PlayerController : MonoBehaviour {
     float viive;                            //kääntyminen
 
     Animator anim;
+
+
+    Damage damage;
+    bool hit;
     
     
 
@@ -32,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start()
     {
+        damage = GetComponent<Damage>();
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
     }
@@ -41,21 +41,26 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-
-        rb.velocity = new Vector3(movement.x * maxSpeed, rb.velocity.y, movement.z * maxSpeed);
+        if (!hit)
+        {
+            rb.velocity = new Vector3(movement.x * maxSpeed, rb.velocity.y, movement.z * maxSpeed);
+            //transform.Translate(new Vector3(movement.x * maxSpeed, 0, movement.z * maxSpeed) * Time.deltaTime, Space.World);
+        }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 9)
+        {
+            maassa = true;
+        }
+
+    }
 
 
     void Update()
     {
-        maassa = false;
-        Collider[] maa = Physics.OverlapSphere(groundCheck.position, maanEtäisyys, onkoMaata);
 
-        foreach (Collider maata in maa)
-        {
-            maassa = true;
-        }
 
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
@@ -90,6 +95,19 @@ public class PlayerController : MonoBehaviour {
         float liike = movement.magnitude;
         anim.SetFloat("Speed", liike);
 
+
+
+
+        hit = damage.hit;
+
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 9)
+        {
+            maassa = false;
+        }
     }
 }
 

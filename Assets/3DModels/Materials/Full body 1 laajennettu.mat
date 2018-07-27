@@ -4,7 +4,7 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Full body 1 laajennettu
   m_Shader: {fileID: 4800000, guid: 9c6ece3d5ef8bb84db19471daaf6c788, type: 3}
@@ -83,7 +83,7 @@ Material:
     - _Parallax: 0.02
     - _RimIntensity: 0.119
     - _RimSize: 2.3
-    - _RimSmoothness: 0.023
+    - _RimSmoothness: 0
     - _ShadowIntensity: 1
     - _Shininess: 1
     - _SmoothnessTextureChannel: 0
