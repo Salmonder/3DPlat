@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class stompOn : MonoBehaviour {
+public class stompOn : MonoBehaviour
+{
 
     public float stompPower;
     public bool stomped = false;
     float time;
     public float flattenSmooth = 0.5f;
-    
+    public float despawn = 10;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +18,8 @@ public class stompOn : MonoBehaviour {
         {
             if (other.gameObject.layer == 11)
             {
-                
+                this.transform.parent.gameObject.GetComponent<EnemyPath>().enabled = false;
+
                 stomped = true;
                 other.transform.root.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Debug.Log("Stompped");
@@ -32,19 +35,25 @@ public class stompOn : MonoBehaviour {
         {
             time = time + Time.deltaTime;
 
-            transform.parent.localScale += new Vector3(0, -time * flattenSmooth, 0);
+            if (transform.parent.localScale.y > 0.25)
+
+
+            {
+                
+
+                transform.parent.localScale += new Vector3(0, -time * flattenSmooth, 0);
+                
+            }
+            transform.parent.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
 
-        if (transform.parent.localScale.y <= 0)
+
+        if (time > despawn)
         {
             Destroy(transform.parent.gameObject);
         }
 
 
-        if (!stomped)
-        {
-            time = 0;
-        }
-    }
 
+    }
 }

@@ -30,13 +30,9 @@ public class Damage : MonoBehaviour {
             rb.velocity = Vector3.zero;
 
             knock();
-
-            
-            
-            
+                    
         }
-
-        
+              
 
     }
 
@@ -55,8 +51,6 @@ public class Damage : MonoBehaviour {
         if (hit)
         {
             time = time + Time.deltaTime;
-            /*rb.velocity = new Vector3(knockBack.x, rb.velocity.y , knockBack.z);
-            rb.AddForce(Vector3.down * 1000);*/
             if (time > knockTime)
             {
                 

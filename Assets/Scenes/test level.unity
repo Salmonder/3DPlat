@@ -669,7 +669,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stompPower: 1100
   stomped: 0
-  flattenSmooth: 0.5
+  flattenSmooth: 5
+  despawn: 1
 --- !u!1001 &1446175220
 Prefab:
   m_ObjectHideFlags: 0
@@ -1241,6 +1242,11 @@ Prefab:
         type: 2}
       propertyPath: sight
       value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204093744618464, guid: 17b954a4b6911e34ab138564a5e5b0af,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114535200755777900, guid: 17b954a4b6911e34ab138564a5e5b0af, type: 2}
