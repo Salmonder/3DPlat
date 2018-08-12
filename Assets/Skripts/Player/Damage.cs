@@ -11,10 +11,15 @@ public class Damage : MonoBehaviour {
     float time = 0;
     Rigidbody rb;
     public float upKnock = 10;
+    public int hp;
+    public GameObject mesh;
+    PlayerController con;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        hp = 2;
+        con = GetComponent<PlayerController>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,8 +34,11 @@ public class Damage : MonoBehaviour {
 
             rb.velocity = Vector3.zero;
 
-            knock();
-                    
+            Knock();
+            if (hp >= 1)
+            {
+                hp = hp - 1;
+            }                    
         }
               
 
@@ -43,6 +51,10 @@ public class Damage : MonoBehaviour {
         if (!hit)
         {
             time = 0;
+        }
+        if (hp <= 0)
+        {
+            Die();
         }
     }
 
@@ -61,10 +73,20 @@ public class Damage : MonoBehaviour {
             }
         }
     }
-    void knock()
+    void Knock()
     {
-        
-        rb.AddForce(Vector3.up * upKnock + new Vector3(knockBack.x, 0, knockBack.z) * KnockForce);
+        if (hp >= 1)
+        {
+            rb.AddForce(Vector3.up * upKnock + new Vector3(knockBack.x, 0, knockBack.z) * KnockForce);
+        }
+    }
+
+    void Die()
+    {
+        mesh.SetActive(false);
+        con.enabled = false;
+        this.enabled = false;
+
     }
 
 }

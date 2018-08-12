@@ -12,19 +12,21 @@ public class Pause : MonoBehaviour {
         if(Input.GetButtonDown("Pause"))
         {
             paused = !paused;
-            OpenPauseMenu();
+            
         }
-    }
-    void OpenPauseMenu()
-    {
         if (paused)
         {
             PauseMenu.SetActive(true);
+            Time.timeScale = 0;
         }
         else
         {
             PauseMenu.SetActive(false);
+            Time.timeScale = 1;
         }
-
     }
+    
+
+
+    
 }
