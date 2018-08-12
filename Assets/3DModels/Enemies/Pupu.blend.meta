@@ -1,24 +1,55 @@
 fileFormatVersion: 2
-guid: f20b380c4cdcd7643a2d90acdcbe95a6
+guid: bfcb9da81ba18df46bf71940ac648410
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Sphere
-    100004: Sphere_002
-    400000: //RootNode
-    400002: Sphere
-    400004: Sphere_002
+    100000: Armature
+    100002: jalka_L
+    100004: jalka_R
+    100006: k_p_l_Etu_L
+    100008: K_p_l_Etu_R
+    100010: k_p_l_Taka_L
+    100012: k_p_l_Taka_R
+    100014: K_si_L
+    100016: K_si_R
+    100018: KorvaAla_L
+    100020: KorvaAla_R
+    100022: KorvaYl__L
+    100024: KorvaYl__R
+    100026: p__
+    100028: //RootNode
+    100030: Sphere
+    100032: Sphere_002
+    100034: torso
+    100036: tuki
+    400000: Armature
+    400002: jalka_L
+    400004: jalka_R
+    400006: k_p_l_Etu_L
+    400008: K_p_l_Etu_R
+    400010: k_p_l_Taka_L
+    400012: k_p_l_Taka_R
+    400014: K_si_L
+    400016: K_si_R
+    400018: KorvaAla_L
+    400020: KorvaAla_R
+    400022: KorvaYl__L
+    400024: KorvaYl__R
+    400026: p__
+    400028: //RootNode
+    400030: Sphere
+    400032: Sphere_002
+    400034: torso
+    400036: tuki
     2100000: p__
     2100002: Material
-    2300000: Sphere
-    2300002: Sphere_002
-    3300000: Sphere
-    3300002: Sphere_002
     4300000: Sphere
     4300002: Sphere_002
     7400000: Default Take
     9500000: //RootNode
+    13700000: Sphere
+    13700002: Sphere_002
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
