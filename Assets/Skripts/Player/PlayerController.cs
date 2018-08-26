@@ -23,7 +23,13 @@ public class PlayerController : MonoBehaviour {
 
 
     Damage damage;
-    bool hit;
+    bool hit;                               //Damage
+
+
+    bool dodge = false;
+    public float dodgetime = 0.25f;
+    float doddgeCoolDown;
+    float timer;
     
     
 
@@ -43,8 +49,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (!hit)
         {
-            rb.velocity = new Vector3(movement.x * maxSpeed, rb.velocity.y, movement.z * maxSpeed);
-            //transform.Translate(new Vector3(movement.x * maxSpeed, 0, movement.z * maxSpeed) * Time.deltaTime, Space.World);
+            rb.velocity = new Vector3(movement.x * maxSpeed, rb.velocity.y, movement.z * maxSpeed);            
         }
     }
 
@@ -60,48 +65,60 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-
+        hit = damage.hit;
 
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
-        movement = new Vector3(moveX, 0, moveZ);
+        movement = new Vector3(moveX, 0, moveZ);                    //määritykset
         if (movement.magnitude >= 1)
         {
-            movement = movement.normalized;
+            movement = movement.normalized;                         // estää liian nopean liikkeen kulmittain
         }
-
 
 
         if (jumpDelay <= 0.1)
         {
-            jumpDelay = jumpDelay + Time.deltaTime;
+            jumpDelay = jumpDelay + Time.deltaTime;                 //Varmistaa että hyppäät vain kerran
         }
 
         if (maassa && Input.GetButtonDown("Jump") && jumpDelay >= 0.1)
         {
             rb.AddForce(new Vector2(0, jumpHight));
-            jumpDelay = 0;
+            jumpDelay = 0;                                             //Hyppy
         }
-
 
 
         if (movement != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement, ylös), turnSmooth);
-        }
-
+        }                                                              //Käntyminen                                                                               
 
 
         float liike = movement.magnitude;
-        anim.SetFloat("Speed", liike);
+        anim.SetFloat("Speed", liike);                                  //Animaattori   
 
 
+        if (Input.GetButtonDown("Dodge"))
+        {
+            dodge = true;
+        }
 
-
-        hit = damage.hit;
-
+        if (dodge)
+        {
+            timer = timer + Time.deltaTime;
+            if (timer <= dodgetime)
+            {
+                movement = movement * 2.25f;
+            }
+            else
+            {
+                dodge = false;
+                timer = 0;
+            }
+        }
     }
 
+    
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 9)

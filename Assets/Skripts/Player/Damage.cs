@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Damage : MonoBehaviour {
 
@@ -10,35 +11,53 @@ public class Damage : MonoBehaviour {
     public bool hit = false;
     float time = 0;
     Rigidbody rb;
-    public float upKnock = 10;
+    public float upKnock = 10;              //knock
+
+
     public int hp;
     public GameObject mesh;
     PlayerController con;
+
+
+    bool invinci = false;
+    public float invinciTime = 1;
+    public GameObject Coll;
+    float timer;                            //invinciframes
+
+    
+    public int lives;
+        
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         hp = 2;
         con = GetComponent<PlayerController>();
+        lives = PlayerPrefs.GetInt("lives");
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Enemy")
+        if (!invinci)
         {
-            Debug.Log("Took damage");
-
-            knockBack = (transform.position - collision.gameObject.transform.position  ).normalized * KnockForce;
-
-            hit = true;
-
-            rb.velocity = Vector3.zero;
-
-            Knock();
-            if (hp >= 1)
+            if (collision.collider.tag == "Enemy")
             {
-                hp = hp - 1;
-            }                    
+                //Debug.Log("Took damage");
+
+                knockBack = (transform.position - collision.gameObject.transform.position).normalized * KnockForce;
+
+                hit = true;
+
+                rb.velocity = Vector3.zero;
+
+                Knock();
+                if (hp >= 1)
+                {
+                    hp = hp - 1;
+                }
+                invinci = true;
+            }
+            
         }
               
 
@@ -56,6 +75,21 @@ public class Damage : MonoBehaviour {
         {
             Die();
         }
+
+        if (invinci)
+        {
+            timer = timer + Time.deltaTime;
+            if (timer >= invinciTime)
+            {
+                invinci = false;
+                Coll.SetActive(false);
+                Coll.SetActive(true);
+            }
+        }
+        else
+        {
+            timer = 0;
+        }
     }
 
     private void FixedUpdate()
@@ -64,12 +98,8 @@ public class Damage : MonoBehaviour {
         {
             time = time + Time.deltaTime;
             if (time > knockTime)
-            {
-                
-                hit = false;
-
-                
-
+            {                
+                hit = false;    
             }
         }
     }
@@ -87,6 +117,14 @@ public class Damage : MonoBehaviour {
         con.enabled = false;
         this.enabled = false;
 
+        if (lives >= 1)
+        {
+            lives = lives - 1;
+            PlayerPrefs.SetInt("lives", lives);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
     }
+
 
 }

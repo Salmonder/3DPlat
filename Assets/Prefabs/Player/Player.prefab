@@ -763,6 +763,7 @@ MonoBehaviour:
   maxSpeed: 10
   jumpHight: 1000
   turnSmooth: 0.3
+  dodgetime: 0.25
 --- !u!114 &114815865388392438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -780,6 +781,9 @@ MonoBehaviour:
   upKnock: 10
   hp: 0
   mesh: {fileID: 1382156487232452}
+  invinciTime: 1
+  Coll: {fileID: 1538287431333020}
+  lives: 0
 --- !u!136 &136611567107105560
 CapsuleCollider:
   m_ObjectHideFlags: 1

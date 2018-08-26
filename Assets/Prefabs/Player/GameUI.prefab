@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224640283816823312}
   - component: {fileID: 114190019394110986}
+  - component: {fileID: 114675322256245442}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -335,7 +336,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114190019394110986}
+      - m_Target: {fileID: 114675322256245442}
         m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
@@ -354,12 +355,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561121241432058}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7aeea18b0af082428ea9fc661f36033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taso: MainMenu
+  tasoNimi: 
 --- !u!114 &114190956382248198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,6 +477,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp1: {fileID: 1294523533320924}
   hp2: {fileID: 1125388345515392}
+--- !u!114 &114675322256245442
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561121241432058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bc7d7537a1aad4b919c6e79b8ac8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taso: Mainmenu
 --- !u!114 &114754268598404522
 MonoBehaviour:
   m_ObjectHideFlags: 1

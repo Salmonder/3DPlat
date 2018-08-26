@@ -12,8 +12,7 @@ public class EnemyPath : MonoBehaviour {
     public int speed =4;
     public int chargeSpeed = 6;
     Rigidbody rb;
-    float liikeX;
-    float liikeZ;                   //nopeus
+                                    //nopeus
 
 
     Vector3 suunta;
@@ -27,27 +26,48 @@ public class EnemyPath : MonoBehaviour {
     public float sight = 5;     //etäisyys pelaajaan / Näkökenttä
     
 
-    int moveMode; 
-    // 1 = menee Waypointille 2 = pysähtyy waypointilla 3 = näkee pelaajan 4 = juoksee kohti pelaajaa 5 = knocback
-
-   
+    public int mode;
+    // 0 = menee Waypointille 1 = pysähtyy waypointilla 2 = näkee pelaajan 3 = juoksee kohti pelaajaa 4 = knocback
+    float noticeTime;
+    float wait;
     
+
+
+    //knockback
+    
+    Vector3 knockBack;
+    int knockForce = 35;
+    int upKnock = 10;
+
+
 
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        rb = GetComponent<Rigidbody> ();                       
+        rb = GetComponent<Rigidbody> ();
+        mode = 0;
     }
 
 
 
     private void FixedUpdate()
     {
-        if (suunta.magnitude >= 0.1)
+        if (mode == 0)
         {
-            rb.velocity = new Vector3(suuntaNorm.x * speed, rb.velocity.y, suuntaNorm.z * speed);       //normi liike
+            if (suunta.magnitude >= 0.1)
+            {
+                rb.velocity = new Vector3(suuntaNorm.x * speed, rb.velocity.y, suuntaNorm.z * speed);       //normi liike
+            }
         }
+
+        if (mode == 3)
+        {
+            if (suunta.magnitude >= 0.1)
+            {
+                rb.velocity = new Vector3(suuntaNorm.x * chargeSpeed, rb.velocity.y, suuntaNorm.z * chargeSpeed);
+            }                                                                                                            
+        }                                                                                                   //Liike kun jahtaa pelaajaa
     }
 
 
@@ -64,18 +84,30 @@ public class EnemyPath : MonoBehaviour {
 
         if (dist2Player > sight)
         {            
-            dir = path[currentPoint].position - transform.position;            
+            dir = path[currentPoint].position - transform.position;
+            if (mode == 3)
+            {
+                mode = 0;                                                                               //kadottaa pelaajan
+            }
         }
         if (dist2Player <= sight)
         {            
+            if (mode == 0)
+            {
+                mode = 2;                                                                               // Huomaa pelaajan
+            }
             dir = player.position - transform.position;
-        }                                                                                              // Määritetään Target (pelaaja vai waypoint)              
-
+        }                                                                                              // Määritetään Target (pelaaja vai waypoint) 
         
+                        
 
         if (dist <=reachDistance)
         {
             currentPoint++;
+            if (mode == 0)
+            {
+                mode = 1;                                                                               // Pysäyttää waypointille
+            }
         }
         if (currentPoint >= path.Length)
         {
@@ -87,6 +119,59 @@ public class EnemyPath : MonoBehaviour {
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(suunta, ylös), turnSmooth);
         }                                                                                               // Kääntäminen
+
+
+        //tästä eteenpäin mode säätöä.
+        if (mode == 2)
+        {
+            noticeTime = noticeTime + Time.deltaTime;
+            if (noticeTime >= 1)
+            {
+                noticeTime = 0;
+                mode = 3;
+            }
+
+        }                                                                                           //vaihtaa hyökkäys modeen
+        
+        if (mode == 1)
+        {
+            wait = wait + Time.deltaTime;
+            if (wait >= 1)
+            {
+                wait = 0;
+                mode = 0;
+            }
+        }
+
+        if (mode == 4)
+        {
+            wait = wait + Time.deltaTime;
+            if (wait >= 1)
+            {
+                wait = 0;
+                mode = 3;
+            } 
+        }
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.root.tag == "Player")
+        {
+            mode = 4; 
+            knockBack = (transform.position - collision.gameObject.transform.position).normalized * knockForce;
+                        
+            rb.velocity = Vector3.zero;
+
+            Knock();
+
+        }
+    }
+
+    void Knock()
+    {
+        rb.AddForce(Vector3.up * upKnock + new Vector3(knockBack.x, 0, knockBack.z) * knockForce);
     }
 
 }
